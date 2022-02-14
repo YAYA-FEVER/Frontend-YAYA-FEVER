@@ -1,6 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  Container,
+  Row,
+  ToggleButton,
+} from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 import NaviBar from "../components/NaviBar/NaviBar";
 import classes from "./PlantDetail.module.css";
 const DUMMY_DATA = {
@@ -21,9 +28,17 @@ const PlantDetail = () => {
   const [temp, setTemp] = useState();
   const [autoState, setAutoState] = useState();
 
+  const [checked, setChecked] = useState(false);
+  const [radioValue, setRadioValue] = useState(1);
+
+  const radios = [
+    { name: "Auto", value: "1" },
+    { name: "Manual", value: "2" },
+  ];
+
   const { id } = useParams();
+
   useEffect(() => {
-    console.log(id);
     setInterval(() => {
       const plantData = DUMMY_DATA;
       setPlantName(plantData.plantName);
@@ -31,13 +46,43 @@ const PlantDetail = () => {
       setHeight(plantData.height);
       setHumidity(plantData.humidity);
       setTemp(plantData.temp);
-      setAutoState(plantData.autoState);
+      if (plantData.autoState) {
+        setAutoState(1);
+      } else {
+        setAutoState(2);
+      }
+
+      setChecked(true);
     }, 1000);
   }, []);
 
   return (
     <Fragment>
       <NaviBar />
+      <Container className={classes.container__top}>
+        <ButtonGroup>
+          {radios.map((radio, idx) => (
+            <ToggleButton
+              key={idx}
+              id={`radio-${idx}`}
+              type="radio"
+              variant={idx % 2 ? "outline-success" : "outline-danger"}
+              name="radio"
+              value={radio.value}
+              checked={autoState === idx}
+              onChange={(e) => setRadioValue(e.currentTarget.value)}
+              disabled={!checked}
+            >
+              {radio.name}
+            </ToggleButton>
+          ))}
+        </ButtonGroup>
+
+        <Link to={`/addPlant/${id}`} className="justify-content-right">
+          <Button type="submit">Editor</Button>
+        </Link>
+      </Container>
+
       <Container className={classes.container}>
         <h2>{plantName}</h2>
         <Row>

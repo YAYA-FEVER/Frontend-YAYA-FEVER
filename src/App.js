@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Shelf from "./pages/Shelf";
 import PlantManager from "./pages/PlantManager";
 import PlantDetail from "./pages/PlantDetail";
+import AddPlant from "./pages/AddPlant";
 
 function App() {
   return (
@@ -16,9 +17,14 @@ function App() {
           <Route path="/plantManager" element={<PlantManager />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/plantManager/plantDetail/:id" element={<PlantDetail/>} />
+          <Route
+            path="/plantManager/plantDetail/:id"
+            element={<PlantDetail />}
+          />
+          <Route path="/addPlant" element={<AddPlant/>}>
+            <Route path=":id" element={<AddPlant/>} />
+          </Route>
           <Route path="*" element={<Navigate to="/shelf" />} />
-          
         </Routes>
       </BrowserRouter>
     </Fragment>

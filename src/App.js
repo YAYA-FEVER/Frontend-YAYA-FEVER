@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Shelf from "./pages/Shelf";
 import PlantManager from "./pages/PlantManager";
+import AddPlant from "./pages/AddPlant";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/plantManager" element={<PlantManager />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/addPlant" element={<AddPlant />} />
           <Route path="*" element={<Navigate to="/shelf" />} />
         </Routes>
       </BrowserRouter>

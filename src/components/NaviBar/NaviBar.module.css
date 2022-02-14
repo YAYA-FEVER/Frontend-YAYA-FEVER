@@ -1,0 +1,18 @@
+.nav_bar {
+    background-color: antiquewhite;
+
+}
+
+.title {
+    text-decoration: none;
+    color: black;
+}
+
+.plant_manager {
+    align-items: center;
+    margin-top: 6px;
+    font-size: 17px;
+    margin-right: 10px;
+    text-decoration: none;
+    color: black;
+}

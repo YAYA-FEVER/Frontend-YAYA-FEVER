@@ -1,18 +1,18 @@
 .container {
-    justify-content: center;
-    text-align: center;
-    margin-top: 3rem;
+  justify-content: center;
+  text-align: center;
+  margin-top: 3rem;
 }
 
 .container__info {
-    margin-top: 3rem;
+  margin-top: 3rem;
 }
 
 .container__top {
-    margin-top: 3rem;
+  margin-top: 3rem;
 }
 
 .link__btn {
-    border: 1px solid rgb(255, 183, 192);
-    align-items: end;
+  display: flex;
+  justify-content: flex-end;
 }

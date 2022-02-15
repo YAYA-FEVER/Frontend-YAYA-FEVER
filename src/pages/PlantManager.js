@@ -16,6 +16,10 @@ const PlantManager = () => {
       console.log(response.response)
     }).catch((error) => {
       console.log(error.response.data.detail);
+      if (error.response.data.detail == "Signature has expired"){
+        localStorage.removeItem('token');
+        localStorage.removeItem('name');
+      }
       navigate('/shelf')
     })
 

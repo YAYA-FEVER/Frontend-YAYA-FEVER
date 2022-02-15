@@ -59,28 +59,33 @@ const PlantDetail = () => {
   return (
     <Fragment>
       <NaviBar />
-      <Container className={classes.container__top}>
-        <ButtonGroup>
-          {radios.map((radio, idx) => (
-            <ToggleButton
-              key={idx}
-              id={`radio-${idx}`}
-              type="radio"
-              variant={idx % 2 ? "outline-success" : "outline-danger"}
-              name="radio"
-              value={radio.value}
-              checked={autoState === idx}
-              onChange={(e) => setRadioValue(e.currentTarget.value)}
-              disabled={!checked}
-            >
-              {radio.name}
-            </ToggleButton>
-          ))}
-        </ButtonGroup>
-
-        <Link to={`/addPlant/${id}`} className="justify-content-right">
-          <Button type="submit">Editor</Button>
-        </Link>
+      <Container className={` flex-end ${classes.container__top}`}>
+        <Row>
+          <Col>
+            <ButtonGroup>
+              {radios.map((radio, idx) => (
+                <ToggleButton
+                  key={idx}
+                  id={`radio-${idx}`}
+                  type="radio"
+                  variant={idx % 2 ? "outline-success" : "outline-danger"}
+                  name="radio"
+                  value={radio.value}
+                  checked={autoState === idx}
+                  onChange={(e) => setRadioValue(e.currentTarget.value)}
+                  disabled={!checked}
+                >
+                  {radio.name}
+                </ToggleButton>
+              ))}
+            </ButtonGroup>
+          </Col>
+          <Col  className={classes.link__btn}>
+            <Link to={`/addPlant/${id}`}>
+              <Button type="submit">Editor</Button>
+            </Link>
+          </Col>
+        </Row>
       </Container>
 
       <Container className={classes.container}>

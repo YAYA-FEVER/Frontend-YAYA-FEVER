@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import {
   Button,
@@ -7,8 +8,9 @@ import {
   Row,
   ToggleButton,
 } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NaviBar from "../components/NaviBar/NaviBar";
+import { checkAdminPermission } from "../service/Authentication";
 import classes from "./PlantDetail.module.css";
 const DUMMY_DATA = {
   id: 1,
@@ -37,6 +39,12 @@ const PlantDetail = () => {
   ];
 
   const { id } = useParams();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    checkAdminPermission(navigate);
+  }, []);
 
   useEffect(() => {
     setInterval(() => {
@@ -80,7 +88,7 @@ const PlantDetail = () => {
               ))}
             </ButtonGroup>
           </Col>
-          <Col  className={classes.link__btn}>
+          <Col className={classes.link__btn}>
             <Link to={`/addPlant/${id}`}>
               <Button type="submit">Editor</Button>
             </Link>

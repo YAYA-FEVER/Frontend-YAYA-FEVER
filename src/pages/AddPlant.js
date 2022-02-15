@@ -5,28 +5,15 @@ import { useNavigate } from "react-router-dom";
 import NaviBar from "../components/NaviBar/NaviBar";
 import EditorForm from "../components/PlantEditor/EditorForm";
 import ImageEditor from "../components/PlantEditor/ImageEditor";
+import { checkAdminPermission } from "../service/Authentication";
 import classes from "./AddPlant.module.css";
 const AddPlant = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios
-      .get("http://localhost:8000/getpermission", {
-        headers: { Authorization: "Bearer " + token },
-      })
-      .then((response) => {
-        console.log(response.response);
-      })
-      .catch((error) => {
-        console.log(error.response.data.detail);
-        if (error.response.data.detail == "Signature has expired"){
-          localStorage.removeItem('token');
-          localStorage.removeItem('name');
-        }
-        navigate("/shelf");
-      });
+    checkAdminPermission(navigate);
   }, []);
+  
   return (
     <Fragment>
       <NaviBar />

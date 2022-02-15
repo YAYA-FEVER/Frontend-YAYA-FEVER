@@ -16,3 +16,8 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.humi__form {
+  margin-top: 1rem;
+  max-width: 200px;
+}

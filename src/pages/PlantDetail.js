@@ -1,10 +1,13 @@
 import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import ReactLoading from "react-loading";
 import {
   Button,
   ButtonGroup,
   Col,
   Container,
+  Form,
   Row,
   ToggleButton,
 } from "react-bootstrap";
@@ -12,6 +15,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import NaviBar from "../components/NaviBar/NaviBar";
 import { checkAdminPermission } from "../service/Authentication";
 import classes from "./PlantDetail.module.css";
+import LoadingScreen from "../components/UI/LoadingScreen";
 const DUMMY_DATA = {
   id: 1,
   plantName: "plant1",
@@ -19,7 +23,7 @@ const DUMMY_DATA = {
   humidity: 30,
   height: 50,
   temp: 20,
-  autoState: true,
+  autoState: 1,
 };
 
 const PlantDetail = () => {
@@ -30,12 +34,14 @@ const PlantDetail = () => {
   const [temp, setTemp] = useState();
   const [autoState, setAutoState] = useState();
 
+  const [loadingState, setLoadingState] = useState(undefined);
+
   const [checked, setChecked] = useState(false);
   const [radioValue, setRadioValue] = useState(1);
 
   const radios = [
-    { name: "Auto", value: "1" },
-    { name: "Manual", value: "2" },
+    { name: "Auto", value: "0" },
+    { name: "Manual", value: "0" },
   ];
 
   const { id } = useParams();
@@ -47,25 +53,33 @@ const PlantDetail = () => {
   }, []);
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       const plantData = DUMMY_DATA;
       setPlantName(plantData.plantName);
       setMoisture(plantData.moisture);
       setHeight(plantData.height);
       setHumidity(plantData.humidity);
       setTemp(plantData.temp);
-      if (plantData.autoState) {
-        setAutoState(1);
+      if (plantData.autoState == 1) {
+        setAutoState(0);
       } else {
-        setAutoState(2);
+        setAutoState(1);
       }
-
       setChecked(true);
     }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    }
   }, []);
 
   return (
     <Fragment>
+      {!checked &&
+        ReactDOM.createPortal(
+          <LoadingScreen />,
+          document.getElementById("modal")
+        )}
       <NaviBar />
       <Container className={` flex-end ${classes.container__top}`}>
         <Row>
@@ -87,6 +101,17 @@ const PlantDetail = () => {
                 </ToggleButton>
               ))}
             </ButtonGroup>
+            {autoState == 0 && (
+              <Form>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Control
+                    type="number"
+                    placeholder="humidity"
+                    className={classes.humi__form}
+                  />
+                </Form.Group>
+              </Form>
+            )}
           </Col>
           <Col className={classes.link__btn}>
             <Link to={`/addPlant/${id}`}>

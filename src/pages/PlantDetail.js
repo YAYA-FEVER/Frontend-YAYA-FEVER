@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import ReactLoading from "react-loading";
 import {
   Button,
   ButtonGroup,
@@ -23,7 +22,7 @@ const DUMMY_DATA = {
   humidity: 30,
   height: 50,
   temp: 20,
-  autoState: 1,
+  autoState: 0,
 };
 
 const PlantDetail = () => {
@@ -33,8 +32,6 @@ const PlantDetail = () => {
   const [height, setHeight] = useState();
   const [temp, setTemp] = useState();
   const [autoState, setAutoState] = useState();
-
-  const [loadingState, setLoadingState] = useState(undefined);
 
   const [checked, setChecked] = useState(false);
   const [radioValue, setRadioValue] = useState(1);
@@ -70,13 +67,29 @@ const PlantDetail = () => {
 
     return () => {
       clearInterval(interval);
-    }
+    };
   }, []);
+
+  const sendHumidityHandler = (event) => {
+    setChecked(false);
+    const time = setTimeout(() => {
+      setAutoState(event.target.value);
+    }, 2000);
+
+    return () => {
+      clearTimeout(time);
+    };
+  };
+
+  const changeModeHandler = (event) => {
+    
+    setAutoState(event.currentTarget.value);
+  };
 
   return (
     <Fragment>
       {!checked &&
-        ReactDOM.createPortal(
+        ReactDOM.createPortal(  
           <LoadingScreen />,
           document.getElementById("modal")
         )}
@@ -94,7 +107,7 @@ const PlantDetail = () => {
                   name="radio"
                   value={radio.value}
                   checked={autoState === idx}
-                  onChange={(e) => setRadioValue(e.currentTarget.value)}
+                  onChange={changeModeHandler}
                   disabled={!checked}
                 >
                   {radio.name}
@@ -102,7 +115,7 @@ const PlantDetail = () => {
               ))}
             </ButtonGroup>
             {autoState == 0 && (
-              <Form>
+              <Form onSubmit={sendHumidityHandler}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Control
                     type="number"

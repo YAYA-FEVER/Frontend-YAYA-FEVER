@@ -1,4 +1,5 @@
 import "./App.css";
+import ReactDOM from 'react-dom'
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import { Fragment } from "react";
 import Login from "./pages/Login";

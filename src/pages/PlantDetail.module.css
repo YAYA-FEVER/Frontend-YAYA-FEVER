@@ -21,3 +21,12 @@
   margin-top: 1rem;
   max-width: 200px;
 }
+
+.container_delete {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn_delete {
+  margin-top: 2rem;
+}

@@ -22,7 +22,7 @@ const DUMMY_DATA = {
   humidity: 30,
   height: 50,
   temp: 20,
-  autoState: 0,
+  autoState: 1,
 };
 
 const PlantDetail = () => {
@@ -82,14 +82,17 @@ const PlantDetail = () => {
   };
 
   const changeModeHandler = (event) => {
-    
     setAutoState(event.currentTarget.value);
+  };
+
+  const deletePlantHandler = () => {
+    console.log();
   };
 
   return (
     <Fragment>
       {!checked &&
-        ReactDOM.createPortal(  
+        ReactDOM.createPortal(
           <LoadingScreen />,
           document.getElementById("modal")
         )}
@@ -158,6 +161,15 @@ const PlantDetail = () => {
             {temp} C
           </Col>
         </Row>
+      </Container>
+      <Container className={classes.container_delete}>
+        <Button
+          onClick={deletePlantHandler}
+          variant="danger"
+          className={classes.btn_delete}
+        >
+          Delete
+        </Button>
       </Container>
     </Fragment>
   );

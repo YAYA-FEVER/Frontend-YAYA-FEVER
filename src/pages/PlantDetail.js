@@ -9,6 +9,7 @@ import {
   Form,
   Row,
   ToggleButton,
+  Alert,
 } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import NaviBar from "../components/NaviBar/NaviBar";
@@ -38,6 +39,10 @@ const PlantDetail = () => {
 
   const [checked, setChecked] = useState(false);
   const [radioValue, setRadioValue] = useState(1);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertState, setShowAlertState] = useState("success");
+  const [alertMessage, setAlertMessage] = useState("");
 
   const radios = [
     { name: "Auto", value: "1" },
@@ -89,7 +94,7 @@ const PlantDetail = () => {
     setChecked(false);
     const token = localStorage.getItem("token");
     const headers = {
-      headers: { Authorization: "Bearer " + token},
+      headers: { Authorization: "Bearer " + token },
     };
     const data = {
       ID: id,
@@ -103,11 +108,22 @@ const PlantDetail = () => {
         headers
       )
       .then((response) => {
-        console.log(response);
+        setShowAlertState("success");
+        setShowAlert(true);
         setChecked(true);
+        setAlertMessage(response.data);
+        window.setTimeout(()=>{
+          setShowAlert(false);
+        },2000);
       })
       .catch((error) => {
         console.log(error.response);
+        setShowAlert(true);
+        setShowAlertState("danger");
+        setAlertMessage(error.response);
+        window.setTimeout(()=>{
+          setShowAlert(false);
+        },2000);
       });
   };
 
@@ -115,27 +131,38 @@ const PlantDetail = () => {
     event.preventDefault();
     const token = localStorage.getItem("token");
     const headers = {
-      headers: { Authorization: "Bearer " + token},
+      headers: { Authorization: "Bearer " + token },
     };
     const data = {
       ID: id,
       water_time: sendTime,
     };
     axios
-    .post(
-      "https://ecourse.cpe.ku.ac.th/exceed05/api/admin/water_time",
-      data,
-      headers
-    ).then((response) => {
-      console.log(response);
-      setChecked(true);
-    })
-    .catch((error) => {
-      console.log(error.response);
-    });
-
-    
-  }
+      .post(
+        "https://ecourse.cpe.ku.ac.th/exceed05/api/admin/water_time",
+        data,
+        headers
+      )
+      .then((response) => {
+        console.log(response);
+        setShowAlertState("success");
+        setShowAlert(true);
+        setChecked(true);
+        setAlertMessage(response.data);
+        window.setTimeout(()=>{
+          setShowAlert(false);
+        },2000);
+      })
+      .catch((error) => {
+        console.log(error.response);
+        setShowAlert(true);
+        setShowAlertState("danger");
+        setAlertMessage(error.response);
+        window.setTimeout(()=>{
+          setShowAlert(false);
+        },2000);
+      });
+  };
 
   const setHumidityHandler = (event) => {
     event.preventDefault();
@@ -156,15 +183,48 @@ const PlantDetail = () => {
       )
       .then((response) => {
         console.log(response);
+        setShowAlertState("success");
+        setShowAlert(true);
         setChecked(true);
+        setAlertMessage(response.data);
+        window.setTimeout(()=>{
+          setShowAlert(false);
+        },2000);
+      })
+      .catch((error) => {
+        console.log(error.response);
+        setShowAlert(true);
+        setShowAlertState("danger");
+        setAlertMessage(error.response);
+        window.setTimeout(()=>{
+          setShowAlert(false);
+        },2000);
+      });
+  };
+
+  const deletePlantHandler = (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem("token");
+    const headers = {
+      headers: { Authorization: "Bearer " + token },
+    };
+    const data = {
+      ID: id,
+    };
+    axios
+      .post(
+        "https://ecourse.cpe.ku.ac.th/exceed05/api/admin/delete_plant",
+        data,
+        headers
+      )
+      .then((response) => {
+        console.log(response);
+        setChecked(true);
+        navigate("./plantManager");
       })
       .catch((error) => {
         console.log(error.response);
       });
-  };
-
-  const deletePlantHandler = () => {
-    console.log();
   };
 
   return (
@@ -175,7 +235,9 @@ const PlantDetail = () => {
           document.getElementById("modal")
         )}
       <NaviBar />
+      
       <Container className={` flex-end ${classes.container__top}`}>
+      {showAlert && <Alert variant={showAlertState}>{alertMessage}</Alert>}
         <Row>
           <Col>
             <ButtonGroup>
@@ -214,7 +276,7 @@ const PlantDetail = () => {
                       type="number"
                       placeholder="water time in seconds"
                       className={classes.humi__form}
-                      onChange={e => setSendTime(e.target.value)}
+                      onChange={(e) => setSendTime(e.target.value)}
                     />
                   </Form.Group>
                 </Form>
@@ -250,7 +312,7 @@ const PlantDetail = () => {
 
           <Col className={classes.container__info}>
             <h4>temp</h4>
-            {temp.toFixed(2)} C
+            {temp && temp.toFixed(2)}
           </Col>
         </Row>
       </Container>

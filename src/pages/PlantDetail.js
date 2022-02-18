@@ -30,14 +30,17 @@ const PlantDetail = () => {
   const [moisture, setMoisture] = useState();
   const [humidity, setHumidity] = useState();
   const [height, setHeight] = useState();
-  const [temp, setTemp] = useState();
+  const [temp, setTemp] = useState(0);
   const [autoState, setAutoState] = useState();
+
+  const [sendHumidity, setSendHumidity] = useState(0);
+  const [sendTime, setSendTime] = useState(0);
 
   const [checked, setChecked] = useState(false);
   const [radioValue, setRadioValue] = useState(1);
 
   const radios = [
-    { name: "Auto", value: "0" },
+    { name: "Auto", value: "1" },
     { name: "Manual", value: "0" },
   ];
 
@@ -51,18 +54,26 @@ const PlantDetail = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const plantData = DUMMY_DATA;
-      setPlantName(plantData.plantName);
-      setMoisture(plantData.moisture);
-      setHeight(plantData.height);
-      setHumidity(plantData.humidity);
-      setTemp(plantData.temp);
-      if (plantData.autoState == 1) {
-        setAutoState(0);
-      } else {
-        setAutoState(1);
-      }
-      setChecked(true);
+      const token = localStorage.getItem("token");
+      axios
+        .get(
+          `https://ecourse.cpe.ku.ac.th/exceed05/api/admin/plant_info/${id}`,
+          { headers: { Authorization: "Bearer " + token } }
+        )
+        .then((response) => {
+          const newData = response.data;
+          setPlantName(newData.plant_name);
+          setMoisture(newData.humidity_soil_hard);
+          setHeight(newData.height_hard);
+          setHumidity(newData.humidity_air_hard);
+          setTemp(newData.temp);
+          if (newData.activate_auto == 1) {
+            setAutoState(0);
+          } else {
+            setAutoState(1);
+          }
+          setChecked(true);
+        });
     }, 1000);
 
     return () => {
@@ -70,19 +81,86 @@ const PlantDetail = () => {
     };
   }, []);
 
-  const sendHumidityHandler = (event) => {
-    setChecked(false);
-    const time = setTimeout(() => {
-      setAutoState(event.target.value);
-    }, 2000);
-
-    return () => {
-      clearTimeout(time);
-    };
+  const onChangeHandler = (event) => {
+    setSendHumidity(event.target.value);
   };
 
   const changeModeHandler = (event) => {
-    setAutoState(event.currentTarget.value);
+    setChecked(false);
+    const token = localStorage.getItem("token");
+    const headers = {
+      headers: { Authorization: "Bearer " + token},
+    };
+    const data = {
+      ID: id,
+      activate_auto: event.currentTarget.value,
+    };
+    console.log(data);
+    axios
+      .post(
+        "https://ecourse.cpe.ku.ac.th/exceed05/api/admin/auto_mode",
+        data,
+        headers
+      )
+      .then((response) => {
+        console.log(response);
+        setChecked(true);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  };
+
+  const sendTimeHandler = (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem("token");
+    const headers = {
+      headers: { Authorization: "Bearer " + token},
+    };
+    const data = {
+      ID: id,
+      water_time: sendTime,
+    };
+    axios
+    .post(
+      "https://ecourse.cpe.ku.ac.th/exceed05/api/admin/water_time",
+      data,
+      headers
+    ).then((response) => {
+      console.log(response);
+      setChecked(true);
+    })
+    .catch((error) => {
+      console.log(error.response);
+    });
+
+    
+  }
+
+  const setHumidityHandler = (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem("token");
+    const headers = {
+      headers: { Authorization: "Bearer " + token },
+    };
+    const data = {
+      ID: id,
+      humidity_soil_front: sendHumidity,
+    };
+    console.log(sendHumidity);
+    axios
+      .post(
+        "https://ecourse.cpe.ku.ac.th/exceed05/api/admin/humidity_front_want",
+        data,
+        headers
+      )
+      .then((response) => {
+        console.log(response);
+        setChecked(true);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
   };
 
   const deletePlantHandler = () => {
@@ -118,15 +196,29 @@ const PlantDetail = () => {
               ))}
             </ButtonGroup>
             {autoState == 0 && (
-              <Form onSubmit={sendHumidityHandler}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Control
-                    type="number"
-                    placeholder="humidity"
-                    className={classes.humi__form}
-                  />
-                </Form.Group>
-              </Form>
+              <Fragment>
+                <Form onSubmit={setHumidityHandler}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Control
+                      type="number"
+                      placeholder="humidity"
+                      className={classes.humi__form}
+                      value={sendHumidity}
+                      onChange={onChangeHandler}
+                    />
+                  </Form.Group>
+                </Form>
+                <Form onSubmit={sendTimeHandler}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Control
+                      type="number"
+                      placeholder="water time in seconds"
+                      className={classes.humi__form}
+                      onChange={e => setSendTime(e.target.value)}
+                    />
+                  </Form.Group>
+                </Form>
+              </Fragment>
             )}
           </Col>
           <Col className={classes.link__btn}>
@@ -158,7 +250,7 @@ const PlantDetail = () => {
 
           <Col className={classes.container__info}>
             <h4>temp</h4>
-            {temp} C
+            {temp.toFixed(2)} C
           </Col>
         </Row>
       </Container>

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export const checkAdminPermission = (navigate) => {
   const token = localStorage.getItem("token");
   axios
-    .get("http://localhost:8000/getpermission", {
+    .get("https://ecourse.cpe.ku.ac.th/exceed05/api/users/getpermission", {
       headers: { Authorization: "Bearer " + token },
     })
     .then((response) => {
@@ -23,7 +23,7 @@ export const checkAdminPermission = (navigate) => {
 export const checkTokenExpired = (navigate) => {
   const token = localStorage.getItem("token");
   axios
-    .get("http://localhost:8000/getpermission", {
+    .get("https://ecourse.cpe.ku.ac.th/exceed05/api/users/getpermission", {
       headers: { Authorization: "Bearer " + token },
     })
     .then((response) => {

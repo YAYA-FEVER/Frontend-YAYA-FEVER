@@ -260,7 +260,8 @@ const PlantDetail = () => {
             {autoState == 0 && (
               <Fragment>
                 <Form onSubmit={setHumidityHandler}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-3 mt-3" controlId="formBasicEmail">
+                    <p>humidity</p>
                     <Form.Control
                       type="number"
                       placeholder="humidity"
@@ -272,6 +273,7 @@ const PlantDetail = () => {
                 </Form>
                 <Form onSubmit={sendTimeHandler}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <p>time</p>
                     <Form.Control
                       type="number"
                       placeholder="water time in seconds"

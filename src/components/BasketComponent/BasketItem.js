@@ -64,6 +64,7 @@ const BasketItem = () => {
         setAlertMessage(response.data);
         window.setTimeout(() => {
           setShowAlert(false);
+          window.location.reload();
         }, 2000);
       })
 
@@ -97,7 +98,7 @@ const BasketItem = () => {
           <LoadingScreen />,
           document.getElementById("modal")
         )}
-      {showAlert && <Alert variant={showAlertState}>{alertMessage}</Alert>}
+      {showAlert && ReactDOM.createPortal(<Alert variant={showAlertState}>{alertMessage}</Alert>,document.getElementById("modal"))}
 
       <div className="customerBasket">
         <h1 className="titleBasket"> CUSTOMER BASKET</h1>

@@ -97,7 +97,8 @@ const EditorForm = () => {
           setAlertMessage(response.data);
         })
         .catch((error) => {
-          console.log(error.response);
+          setShowAlert(true);
+          setAlertMessage(error.response);
         });
     })
     

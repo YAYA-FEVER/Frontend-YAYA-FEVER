@@ -24,7 +24,7 @@ const RegisterForm = () => {
         password: passwordIn,
       };
       axios
-        .post("http://localhost:8000/register", payload)
+        .post("https://ecourse.cpe.ku.ac.th/exceed05/api/users/register", payload)
         .then((response) => {
           setValidForm(true);
           navigate("/login");

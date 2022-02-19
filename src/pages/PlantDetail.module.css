@@ -1,0 +1,32 @@
+.container {
+  justify-content: center;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.container__info {
+  margin-top: 3rem;
+}
+
+.container__top {
+  margin-top: 3rem;
+}
+
+.link__btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.humi__form {
+  margin-top: 1rem;
+  max-width: 200px;
+}
+
+.container_delete {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn_delete {
+  margin-top: 2rem;
+}

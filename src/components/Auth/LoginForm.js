@@ -19,7 +19,7 @@ const LoginForm = () => {
       password: passwordIn,
     };
     axios
-      .post("http://localhost:8000/login", payload)
+      .post("https://ecourse.cpe.ku.ac.th/exceed05/api/users/login", payload)
       .then((response) => {
         setValidForm(true);
         localStorage.setItem("token", response.data.token);

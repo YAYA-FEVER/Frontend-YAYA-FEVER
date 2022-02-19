@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import classes from "./NaviBar.module.css";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ const NaviBar = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:8000/getpermission", {
+      .get("https://ecourse.cpe.ku.ac.th/exceed05/api/users/getpermission", {
         headers: { Authorization: "Bearer " + token },
       })
       .then((response) => {
@@ -32,9 +32,17 @@ const NaviBar = () => {
     if (localStorage.getItem("token")) {
       const name = localStorage.getItem("name");
       naviLink = (
-        <NavDropdown id="nav-dropdown-dark-example" title={`Hi ${name}`}>
-          <NavDropdown.Item onClick={onLogout}>Logout</NavDropdown.Item>
-        </NavDropdown>
+        <Fragment>
+          <Link
+            to="/basket"
+            className={`justify-content-end ${classes.plant_manager}`}
+          >
+            <p>basket</p>
+          </Link>
+          <NavDropdown id="nav-dropdown-dark-example" title={`Hi ${name}`}>
+            <NavDropdown.Item onClick={onLogout}>Logout</NavDropdown.Item>
+          </NavDropdown>
+        </Fragment>
       );
     }
     return naviLink;
@@ -57,7 +65,9 @@ const NaviBar = () => {
               >
                 <p>PlantManager</p>
               </Link>
-            ) : <></>}
+            ) : (
+              <></>
+            )}
             {checkIsLogin()}
           </Nav>
         </Navbar.Collapse>

@@ -1,28 +1,31 @@
 .plantImage {
     /* min-height: 15cm;
     min-width: 15cm; */
-    max-width: 8cm;
-    max-height: 8cm;
+    max-width: 10cm;
+    max-height: 10cm;
     border-radius: 5%;
-    
+    justify-content: center;
 }
 
 .container-detail {
+    margin-top: 0.7cm;
     /* min-height: 15cm;
     min-width: 15cm; */
-    margin-left: 0.7cm;
-    max-width: 8cm;
-    max-height: 8cm;
+    /* margin-left: 0.7cm; */
+    min-width: 10cm;
+    min-height: 5cm;
     box-sizing: border-box;
     word-wrap: break-word;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 .grid-container-body {
     display: grid;
-    grid-template-columns: repeat(2,auto);
+    grid-template-columns: repeat(1,10cm);
     width: 100%;
     box-sizing: border-box;
+    justify-content: center;
+    align-content: center;
 }
 
 

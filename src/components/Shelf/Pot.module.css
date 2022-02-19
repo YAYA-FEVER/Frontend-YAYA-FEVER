@@ -2,8 +2,8 @@
     opacity: 25%;
 }
 .pot :hover {
-    width: 4.5cm;
-    height: 4.5cm;
+    width: 6cm;
+    height: 6cm;
     transition: 0.5s;
     cursor: pointer;
     position: absolute;

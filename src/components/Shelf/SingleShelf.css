@@ -5,15 +5,16 @@
 }
 
 .pot {
+    margin-top: 2cm;
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: 4cm 4cm 4cm 0cm;
+    grid-template-columns: 5cm 5cm 5cm 0cm;
     justify-content: center;
 }
 
 .plant {
-    width: 4cm;
-    height: 4cm;   
+    width: 5cm;
+    height: 5cm;   
 }
 
 .shelfimage {
@@ -27,11 +28,14 @@
 
  .shelfimage img {
     display: block;
-    width: 12cm;
+    width: 15cm;
     justify-content: center;
 } 
 
 .free {
-    margin-top: 4cm;
+    margin-top: 5cm;
 }
 
+.plus-button {
+    background-color: rgb(30, 230, 30);
+}

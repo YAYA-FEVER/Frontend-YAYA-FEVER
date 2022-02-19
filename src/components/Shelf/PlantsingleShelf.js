@@ -71,7 +71,7 @@ const PlantSingleShelf = () => {
   return (
     <Container>
       <div className="header">Plant Manager</div>
-      <Button onClick={addPlantHandler}>+</Button>
+      <Button onClick={addPlantHandler} className="plus-button">+</Button>
       <Row lg={1} md={1} sm={1} xl={2}>
         {allShelf}
       </Row>

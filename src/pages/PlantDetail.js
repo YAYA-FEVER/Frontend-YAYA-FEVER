@@ -33,6 +33,7 @@ const PlantDetail = () => {
   const [height, setHeight] = useState();
   const [temp, setTemp] = useState(0);
   const [autoState, setAutoState] = useState();
+  const [url, setUrl] = useState();
 
   const [sendHumidity, setSendHumidity] = useState(0);
   const [sendTime, setSendTime] = useState(0);
@@ -72,6 +73,7 @@ const PlantDetail = () => {
           setHeight(newData.height_hard);
           setHumidity(newData.humidity_air_hard);
           setTemp(newData.temp);
+          setUrl(newData.img)
           if (newData.activate_auto == 1) {
             setAutoState(0);
           } else {
@@ -292,7 +294,9 @@ const PlantDetail = () => {
           </Col>
         </Row>
       </Container>
-
+      <Container className={classes["container-plant-image"]}>
+        <img src={url} className={classes["plant-image"]}/>
+      </Container>
       <Container className={classes.container}>
         <h2>{plantName}</h2>
         <Row>

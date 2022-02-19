@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NaviBar from "../components/NaviBar/NaviBar";
+import { Container , Row , Col} from "react-bootstrap";
+import SingleShelf from "../components/Shelf/SingleShelf";
 
 const PlantManager = () => {
 
@@ -22,10 +24,25 @@ const PlantManager = () => {
   }, [])
 
   return (
-    <Fragment>
-      <NaviBar />
-      <div>PlantManager</div>
-    </Fragment>
+      <Container>
+          <div className="header">PLANT MANAGER</div>
+          <Row className="firstLine">
+              <Col>
+                  <SingleShelf />
+              </Col>
+              <Col>
+                  <SingleShelf />
+              </Col> 
+          </Row>
+          <Row className="secondLine">
+              <Col>
+                  <SingleShelf />
+              </Col> 
+              <Col>
+                  <SingleShelf />
+              </Col> 
+          </Row>
+      </Container>
   );
 };
 

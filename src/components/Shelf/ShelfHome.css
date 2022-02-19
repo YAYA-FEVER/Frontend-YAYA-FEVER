@@ -1,0 +1,33 @@
+.header {
+    margin-top: 1.5cm;
+    size: 100px;
+    text-align: center;
+    font-size: 25px;
+}
+.container_shelf_order {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fill, 120px);
+    grid-row-gap: .5em;
+    grid-column-gap: 1em;
+    align-content: center;
+    margin-top: 5rem;
+}
+/* .firstLine {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 15cm 15cm;
+} */
+
+
+
+Row {
+    justify-content: center;
+}
+
+Col {
+    justify-content: center;
+}
+
+

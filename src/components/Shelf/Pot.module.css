@@ -1,0 +1,10 @@
+.reserved {
+    opacity: 25%;
+}
+.pot :hover {
+    width: 4.5cm;
+    height: 4.5cm;
+    transition: 0.5s;
+    cursor: pointer;
+    position: absolute;
+}  

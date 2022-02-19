@@ -10,7 +10,7 @@ const Shelf = () => {
   return (
     <Fragment>
       <NaviBar />
-      <div>ShelfHome</div>
+      <ShelfHome />
     </Fragment>
   );
 };

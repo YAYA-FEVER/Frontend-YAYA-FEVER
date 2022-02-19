@@ -248,10 +248,10 @@ const PlantDetail = () => {
               <Fragment>
                 <Form>
                   <Form.Group className="mb-3 mt-3" controlId="formBasicEmail">
-                    <p>humidity</p>
+                    <p>moisture</p>
                     <Form.Control
                       type="number"
-                      placeholder="humidity"
+                      placeholder="moisture"
                       className={classes.humi__form}
                       value={sendHumidity}
                       onChange={onChangeHandler}
@@ -285,12 +285,12 @@ const PlantDetail = () => {
         <Row>
           <Col className={classes.container__info}>
             <h4>moisture</h4>
-            {moisture}%RH
+            {moisture} %RH
           </Col>
 
           <Col className={classes.container__info}>
             <h4>humidity</h4>
-            {humidity}%RH
+            {humidity} %RH
           </Col>
         </Row>
         <Row>
@@ -301,7 +301,7 @@ const PlantDetail = () => {
 
           <Col className={classes.container__info}>
             <h4>temp</h4>
-            {temp && temp.toFixed(2)}
+            {temp && temp.toFixed(2)}  ํC
           </Col>
         </Row>
       </Container>

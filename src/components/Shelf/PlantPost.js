@@ -56,19 +56,23 @@ const PlantPost = (props) => {
   };
 
   return (
-    <Modal show={props.show} onHide={props.handleClose} >
+    <Modal show={props.show} onHide={props.handleClose} className="modal">
       <Modal.Header closeButton>
         <Modal.Title>{plantName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <img src={url} />
-        <div className="detail">{detail}</div>
+        <div className="grid-container-body">
+          <img src={url} className="plantImage"/>
+          <div className="container-detail">
+            <div className="detail">{detail}</div>
+          </div>
+        </div>
       </Modal.Body>
       <Modal.Footer>
         <div>Price ${price}</div>
         <div>
           {props.booking == 0 && localStorage.getItem("token") && (
-            <Button variant="primary" onClick={reserve} c>
+            <Button variant="primary" onClick={reserve} >
               <div>Reserve</div>
             </Button>
           )}

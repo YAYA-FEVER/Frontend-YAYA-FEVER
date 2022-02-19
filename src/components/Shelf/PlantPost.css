@@ -1,3 +1,29 @@
-.container-detail {
+.plantImage {
+    /* min-height: 15cm;
+    min-width: 15cm; */
+    max-width: 8cm;
+    max-height: 8cm;
+    border-radius: 5%;
     
 }
+
+.container-detail {
+    /* min-height: 15cm;
+    min-width: 15cm; */
+    margin-left: 0.7cm;
+    max-width: 8cm;
+    max-height: 8cm;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow: scroll;
+}
+
+.grid-container-body {
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+

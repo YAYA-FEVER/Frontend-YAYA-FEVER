@@ -14,7 +14,7 @@ const NaviBar = () => {
     navigate("/login");
   };
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");  
     axios
       .get("https://ecourse.cpe.ku.ac.th/exceed05/api/users/getpermission", {
         headers: { Authorization: "Bearer " + token },
@@ -22,7 +22,7 @@ const NaviBar = () => {
       .then((response) => {
         setPermission(1);
       })
-      .catch((error) => {
+      .catch((error) => { 
         setPermission(0);
       });
   }, []);

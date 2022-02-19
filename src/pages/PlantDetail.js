@@ -94,12 +94,34 @@ const PlantDetail = () => {
 
   const changeModeHandler = (event) => {
     setChecked(false);
+    if (sendTime == 0) {
+      setShowAlertState("danger");
+        setShowAlert(true);
+        setChecked(true);
+        setAlertMessage("please field the time");
+        window.setTimeout(()=>{
+          setShowAlert(false);
+        },2000);
+      return;
+    }
+    if (sendHumidity == 0) {
+      setShowAlertState("danger");
+        setShowAlert(true);
+        setChecked(true);
+        setAlertMessage("please field the humidity");
+        window.setTimeout(()=>{
+          setShowAlert(false);
+        },2000);
+      return;
+    }
     const token = localStorage.getItem("token");
     const headers = {
       headers: { Authorization: "Bearer " + token },
     };
     const data = {
       ID: id,
+      water_time: sendTime,
+      humidity_soil_front: sendHumidity,
       activate_auto: event.currentTarget.value,
     };
     console.log(data);
@@ -129,7 +151,7 @@ const PlantDetail = () => {
       });
   };
 
-  const sendTimeHandler = (event) => {
+  const sendConfigHandler= (event) => {
     event.preventDefault();
     const token = localStorage.getItem("token");
     const headers = {
@@ -138,48 +160,12 @@ const PlantDetail = () => {
     const data = {
       ID: id,
       water_time: sendTime,
+      humidity_soil_front: sendHumidity,
+      activate_auto: autoState
     };
     axios
       .post(
         "https://ecourse.cpe.ku.ac.th/exceed05/api/admin/water_time",
-        data,
-        headers
-      )
-      .then((response) => {
-        console.log(response);
-        setShowAlertState("success");
-        setShowAlert(true);
-        setChecked(true);
-        setAlertMessage(response.data);
-        window.setTimeout(()=>{
-          setShowAlert(false);
-        },2000);
-      })
-      .catch((error) => {
-        console.log(error.response);
-        setShowAlert(true);
-        setShowAlertState("danger");
-        setAlertMessage(error.response);
-        window.setTimeout(()=>{
-          setShowAlert(false);
-        },2000);
-      });
-  };
-
-  const setHumidityHandler = (event) => {
-    event.preventDefault();
-    const token = localStorage.getItem("token");
-    const headers = {
-      headers: { Authorization: "Bearer " + token },
-    };
-    const data = {
-      ID: id,
-      humidity_soil_front: sendHumidity,
-    };
-    console.log(sendHumidity);
-    axios
-      .post(
-        "https://ecourse.cpe.ku.ac.th/exceed05/api/admin/humidity_front_want",
         data,
         headers
       )
@@ -259,9 +245,8 @@ const PlantDetail = () => {
                 </ToggleButton>
               ))}
             </ButtonGroup>
-            {autoState == 0 && (
               <Fragment>
-                <Form onSubmit={setHumidityHandler}>
+                <Form>
                   <Form.Group className="mb-3 mt-3" controlId="formBasicEmail">
                     <p>humidity</p>
                     <Form.Control
@@ -272,8 +257,6 @@ const PlantDetail = () => {
                       onChange={onChangeHandler}
                     />
                   </Form.Group>
-                </Form>
-                <Form onSubmit={sendTimeHandler}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <p>time</p>
                     <Form.Control
@@ -285,7 +268,7 @@ const PlantDetail = () => {
                   </Form.Group>
                 </Form>
               </Fragment>
-            )}
+            
           </Col>
           <Col className={classes.link__btn}>
             <Link to={`/addPlant/${id}`}>

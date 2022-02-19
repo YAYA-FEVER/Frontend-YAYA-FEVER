@@ -88,7 +88,7 @@ const EditorForm = () => {
       };
       axios
         .post(
-          "https://ecourse.cpe.ku.ac.th/exceed05/api/admin/new_plant",
+          "https://ecourse.cpe.ku.ac.th/exceed05/api/admin/set_plant",
           payload,
           headers
         )

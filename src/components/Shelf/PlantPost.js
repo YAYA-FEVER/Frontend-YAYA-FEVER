@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Plant1 from "../../static/image/plant1.png";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
+import './PlantPost.css'
 
 const DUMMY_DATA = {
   plant_name: "PlantNAJA",
@@ -55,7 +56,7 @@ const PlantPost = (props) => {
   };
 
   return (
-    <Modal show={props.show} onHide={props.handleClose}>
+    <Modal show={props.show} onHide={props.handleClose} >
       <Modal.Header closeButton>
         <Modal.Title>{plantName}</Modal.Title>
       </Modal.Header>
@@ -67,7 +68,7 @@ const PlantPost = (props) => {
         <div>Price ${price}</div>
         <div>
           {props.booking == 0 && localStorage.getItem("token") && (
-            <Button variant="primary" onClick={reserve}>
+            <Button variant="primary" onClick={reserve} c>
               <div>Reserve</div>
             </Button>
           )}

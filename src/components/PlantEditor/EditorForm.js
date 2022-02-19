@@ -4,6 +4,7 @@ import { Button, Form, Alert } from "react-bootstrap";
 import { flushSync } from "react-dom";
 import { useParams } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
+import { uploadImage } from "../../service/Upload";
 
 const EditorForm = () => {
   const { id } = useParams();
@@ -31,30 +32,7 @@ const EditorForm = () => {
       setAlertMessage("please upload your image");
       return;
     }
-    // Create an object of formData
-    const formData = new FormData();
-
-    // Update the formData object
-    formData.set("file", fileState);
-    console.log(fileState.selectedFile);
-    // Details of the uploaded file
-
-    // Request made to the backend api
-    // Send formData object
-    axios
-      .post(
-        `https://ecourse.cpe.ku.ac.th/exceed05/api/admin/image_upload/${plantId}`,
-        formData
-      )
-      .then((response) => {
-        console.log("sucess");
-        setFileState(undefined);
-      })
-      .catch((error) => {
-        console.log(formData);
-        console.log(error.response);
-        setFileState(undefined);
-      });
+    uploadImage(fileState).then(response => console.log(response))
   };
 
   useEffect(() => {
@@ -84,7 +62,19 @@ const EditorForm = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if (price && plantId && plantName) {
+    if (plantId == undefined) {
+      setShowAlert(true);
+      setAlertMessage("please field the id");
+      return;
+    }
+    if (fileState == undefined) {
+      setShowAlert(true);
+      setAlertMessage("please upload your image");
+      return;
+    }
+    if (price && plantId && plantName) {}
+    uploadImage(fileState).then(response => {
+      const url = response;
       const token = localStorage.getItem("token");
       const headers = {
         headers: { Authorization: "Bearer " + token },
@@ -94,6 +84,7 @@ const EditorForm = () => {
         plant_name: plantName,
         detail: description,
         price: price,
+        img: url
       };
       axios
         .post(
@@ -108,7 +99,10 @@ const EditorForm = () => {
         .catch((error) => {
           console.log(error.response);
         });
-    }
+    })
+    
+      
+    
   };
 
   return (
@@ -116,7 +110,6 @@ const EditorForm = () => {
       <Row>
         <Col xs={5}>
           <input type="file" onChange={onFileChange} />
-          <Button onClick={onFileUpload}>upload image</Button>
         </Col>
         <Col>
           {showAlert && <Alert variant="success">{alertMessage}</Alert>}

@@ -18,14 +18,9 @@ const AddPlant = () => {
     <Fragment>
       <NaviBar />
       <Container className={classes.editor__container}>
-        <Row>
-          <Col xs={5}>
-            <ImageEditor />
-          </Col>
-          <Col>
+
             <EditorForm />
-          </Col>
-        </Row>
+        
       </Container>
     </Fragment>
   );
